@@ -54,10 +54,31 @@ public class IssueServiceImpl implements IssueService{
         return respnose;
     }
 
-    @Override
-    public Boolean delete(IssueDto issue) {
-        issueRepository.deleteById(issue.getId());
-        return true;
-    }
+	/*
+	 * @Override public Boolean delete(Long id) {
+	 * issueRepository.deleteById(issue.getId()); return true; }
+	 */
+
+	@Override
+	public IssueDto update(Long id, IssueDto issue) {
+	
+		Issue issueDb=issueRepository.getOne(id);
+		if(issueDb==null) {
+			throw new IllegalArgumentException("Issue do not exist id:"+id);
+		}
+		
+		issueDb.setDate(issue.getDate());
+		issueDb.setDescription(issue.getDescription());
+		issueDb.setDetails(issue.getDetails());
+		issueDb.setIssueStatus(issue.getIssueStatus());
+		issueDb=issueRepository.save(issueDb);
+		return modelMapper.map(issueDb, IssueDto.class);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		issueRepository.deleteById(id);
+		return true;
+	}
 
 }

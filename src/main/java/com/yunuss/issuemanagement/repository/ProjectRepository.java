@@ -10,8 +10,10 @@ import com.yunuss.issuemanagement.entities.Project;
 import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    List<Project> getByProjectCode(String projectCode);
-
+    Project getByProjectCode(String projectCode);
+    Project getByProjectCodeAndIdNot(String projectCode,Long id);
+    Project getById(Long id);
+    void deleteById(Long id);
     List<Project> getByProjectCodeContains(String projectCode);
 
     Page<Project> findAll(Pageable pageable);

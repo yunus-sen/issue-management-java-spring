@@ -9,7 +9,9 @@ import com.yunuss.issuemanagement.dto.ProjectDto;
 import com.yunuss.issuemanagement.entities.Project;
 import com.yunuss.issuemanagement.repository.ProjectRepository;
 import com.yunuss.issuemanagement.service.ProjectService;
+import com.yunuss.issuemanagement.util.TPage;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -72,15 +74,20 @@ public class ProjectServiceImpl implements ProjectService {
         return null;
     }
 
-    @Override
-    public Page<Project> getAllPageable(Pageable pageable) {
-        return projectRepository.findAll(pageable);
-    }
+    
 
     @Override
     public Boolean delete(Long id) {
         projectRepository.deleteById(id);
     	return true;
+    }
+
+	@Override
+	public TPage<ProjectDto> getAllPageable(Pageable pageable) {
+	    Page<Project> data = projectRepository.findAll(pageable);
+        TPage<ProjectDto> respnose = new TPage<ProjectDto>();
+        respnose.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), ProjectDto[].class)));
+        return respnose;
     }
 
 	

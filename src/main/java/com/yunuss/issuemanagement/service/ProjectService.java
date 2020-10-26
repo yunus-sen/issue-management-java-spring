@@ -2,6 +2,8 @@ package com.yunuss.issuemanagement.service;
 
 import com.yunuss.issuemanagement.dto.ProjectDto;
 import com.yunuss.issuemanagement.entities.Project;
+import com.yunuss.issuemanagement.util.TPage;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,7 +20,7 @@ public interface ProjectService {
 
     List<Project> getByProjectCodeContains(String projectCode);
 
-    Page<Project> getAllPageable(Pageable pageable);
+    TPage<ProjectDto> getAllPageable(Pageable pageable);
 
     Boolean delete(Long id);
 
